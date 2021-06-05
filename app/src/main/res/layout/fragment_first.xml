@@ -206,6 +206,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/myProfileLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:layout_margin="20sp"
@@ -268,11 +269,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello"/>
-
 
 </LinearLayout>

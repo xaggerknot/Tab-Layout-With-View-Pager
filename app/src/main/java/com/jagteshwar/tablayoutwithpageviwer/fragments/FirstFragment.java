@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jagteshwar.tablayoutwithpageviwer.R;
+import com.jagteshwar.tablayoutwithpageviwer.activity.MyProfileActivity;
 import com.jagteshwar.tablayoutwithpageviwer.activity.SendActivity;
 import com.jagteshwar.tablayoutwithpageviwer.fragments.SendFragment;
 
@@ -26,7 +27,7 @@ import com.jagteshwar.tablayoutwithpageviwer.fragments.SendFragment;
 public class FirstFragment extends Fragment {
 
     Context context;
-    LinearLayout sendLinearLayout;
+    LinearLayout sendLinearLayout, myProfileLinearLayout;
     SendFragment sendFragment;
 
 
@@ -49,8 +50,15 @@ public class FirstFragment extends Fragment {
         Log.d("my tag", "onCreateView");
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         sendLinearLayout = view.findViewById(R.id.sendLinearLayout);
+        myProfileLinearLayout = view.findViewById(R.id.myProfileLinearLayout);
         Toast.makeText(context, "onCreateView", Toast.LENGTH_SHORT).show();
-
+        myProfileLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         onclick();
         return view;
     }

@@ -1,6 +1,7 @@
 package com.jagteshwar.tablayoutwithpageviwer.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.jagteshwar.tablayoutwithpageviwer.MainActivity;
 import com.jagteshwar.tablayoutwithpageviwer.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -22,14 +24,26 @@ import org.json.JSONObject;
 
 public class SendActivity extends AppCompatActivity implements PaymentResultListener {
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Checkout.preload(getApplicationContext());
-        
+        toolbar.setNavigationIcon(R.drawable.ic_backarrow);
+        this.getWindow().getDecorView().getWindowInsetsController().hide(
+                android.view.WindowInsets.Type.statusBars());
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(SendActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void commitTransaction(View view) {
@@ -48,7 +62,7 @@ public class SendActivity extends AppCompatActivity implements PaymentResultList
         /**
          * Set your logo here
          */
-     //   checkout.setImage(R.drawable.logo);
+        //   checkout.setImage(R.drawable.logo);
 
         /**
          * Reference to current activity
@@ -64,12 +78,12 @@ public class SendActivity extends AppCompatActivity implements PaymentResultList
             options.put("name", "Jagteshwar Singh");
             options.put("description", "Reference No. #123456");
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
-         //   options.put("order_id", "order_DBJOWzybf0sJbb");//from response of step 3.
+            //   options.put("order_id", "order_DBJOWzybf0sJbb");//from response of step 3.
             options.put("theme.color", "#3399cc");
             options.put("currency", "INR");
             options.put("amount", "50000");//pass amount in currency subunits
             options.put("prefill.email", "xaggerknot@gmail.com");
-            options.put("prefill.contact","15147780003");
+            options.put("prefill.contact", "15147780003");
             JSONObject retryObj = new JSONObject();
             retryObj.put("enabled", true);
             retryObj.put("max_count", 4);
@@ -77,18 +91,18 @@ public class SendActivity extends AppCompatActivity implements PaymentResultList
 
             checkout.open(activity, options);
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             Log.e("my tag", "Error in starting Razorpay Checkout", e);
         }
     }
 
     @Override
     public void onPaymentSuccess(String s) {
-        Log.d("my tag", "payment successful: "+s);
+        Log.d("my tag", "payment successful: " + s);
     }
 
     @Override
     public void onPaymentError(int i, String s) {
-        Log.d("my tag", "failed: "+ s);
+        Log.d("my tag", "failed: " + s);
     }
 }
